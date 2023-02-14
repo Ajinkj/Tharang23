@@ -9,26 +9,19 @@
   display: none;
 }
     .animation-container {
-      height: 1000px;
-      position: relative;
-       /* set the height of the container to enable scrolling */
+      height: 1000px; /* set the height of the container to enable scrolling */
     }
-    .image-container {
-  position: fixed; /* set the position of the container to fixed */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* set a negative z-index to position the image behind the container */
-}
-.animation-image {
-  position: absolute; /* set the position of the image to absolute */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
+    .animation-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.8s ease;
+      z-index: -1; /* set a transition for smooth image change */
+    }
     .text {
         font-family: Arial, sans-serif;
         font-size: 24px;
@@ -61,9 +54,7 @@
 </head>
 <body>
   <div class="animation-container">
-    <div class="image-container"></div>
     <img src="1.jpg" alt="Animation Image" class="animation-image">
-</div>
   </div>
   <div class="text text1">Get Ready</div>
   <div class="text-container">
@@ -74,7 +65,7 @@
   <script>
     const images = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg','12.jpg','13.jpg','14.jpg','15.jpg','16.jpg','17.jpg','18.jpg','19.jpg','20.jpg','21.jpg','22.jpg','23.jpg','24.jpg',  ];
     
-    const imageCount = 150;
+    const imageCount = 100;
     const imageHeight = 1000 / imageCount; /* set the height of each image */
     let currentImage = 0;
     
