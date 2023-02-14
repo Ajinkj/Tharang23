@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .animation-container {
+      height: 1000px; /* set the height of the container to enable scrolling */
+    }
+
+    .animation-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.8s ease; /* set a transition for smooth image change */
+    }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <div class="animation-container">
+    <img src="1.png" alt="Animation Image" class="animation-image">
+  </div>
+  <script>
+    const images = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png', '13.png', '14.png', '15.png', ];
+    
+    const imageCount = 20;
+    const imageHeight = 1000 / imageCount; /* set the height of each image */
+    let currentImage = 0;
+    
+    function updateImage() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const newImage = Math.floor(scrollTop / imageHeight); /* calculate the current image index based on scroll position */
+      
+      if (newImage !== currentImage) {
+        currentImage = newImage;
+        const imageSrc = images[currentImage];
+        const animationImage = document.querySelector('.animation-image');
+        animationImage.src = imageSrc;
+        animationImage.style.opacity = 1;
+      }
+    }
+        window.addEventListener('scroll', updateImage);
+  </script>
+</body>
+</html>
