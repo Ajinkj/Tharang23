@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>tharang</title>
+    <title>Scrolling GIFs Example</title>
     <style>
       body {
         margin: 0;
@@ -37,7 +37,7 @@
         let currentGifIndex = 0;
 
         window.addEventListener('scroll', () => {
-          const scrollTop = window.pageYOffset;
+          const scrollTop = window.scrollY;
           const windowHeight = window.innerHeight;
           const documentHeight = document.documentElement.scrollHeight;
           const currentGifElement = gifElements[currentGifIndex];
