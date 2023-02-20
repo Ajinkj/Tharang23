@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>tharang</title>
+    <title>Scrolling GIFs Example</title>
     <style>
       body {
         margin: 0;
@@ -47,7 +47,7 @@
             currentGifElement.classList.add("active");
           }
 
-          if (currentGifIndex < gifElements.length - 1 && rect.bottom <= 0) {
+          if (currentGifIndex < gifElements.length - 1 && rect.bottom <= windowHeight) {
             currentGifElement.classList.remove("active");
             currentGifIndex++;
           }
