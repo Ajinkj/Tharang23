@@ -1,71 +1,82 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Gif Transition Demo</title>
-    <style>
-      .gif-container {
-        position: relative;
-        height: 100vh;
-        overflow: hidden;
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kkkk</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .scroll-gif-container {
+      height: 100vh;
+      overflow: scroll;
+      scroll-snap-type: y mandatory;
+    }
+
+    .scroll-gif {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+      scroll-snap-align: start;
+      display: none;
+    }
+
+    #redirect-link {
+      display: block;
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-gif-container">
+    <img class="scroll-gif" src="1.gif">
+    <img class="scroll-gif" src="2.gif">
+    <img class="scroll-gif" src="3.gif">
+    <img class="scroll-gif" src="4.gif">
+  </div>
+  <a id="redirect-link" href="https://www.example.com">Click here to go to Example.com</a>
+  <script>
+    const gifs = document.querySelectorAll('.scroll-gif');
+    const redirectLink = document.querySelector('#redirect-link');
+    let currentGifIndex = 0;
+    let scrolled = false;
+
+    function showNextGif() {
+      if (currentGifIndex >= gifs.length) {
+        return;
       }
 
-      .gif {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        opacity: 0;
-        transition: transform 1s, opacity 1s;
+      gifs[currentGifIndex].style.display = 'none';
+      currentGifIndex++;
+      scrolled = false;
+
+      if (currentGifIndex < gifs.length) {
+        gifs[currentGifIndex].style.display = 'block';
       }
 
-      .gif.active {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-
-      .gif.active ~ .gif {
-        opacity: 1;
-      }
-
-      .gif.active + .gif {
-        transform: translate(-50%, -50%) scale(1.2);
-      }
-
-      .gif.active + .gif + .gif {
-        transform: translate(-50%, -50%) scale(1.4);
-      }
-
-      .gif.active + .gif + .gif + .gif {
-        transform: translate(-50%, -50%) scale(1.6);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="gif-container">
-      <img src="1.gif" class="gif active">
-      <img src="2.gif" class="gif">
-      <img src="3.gif" class="gif">
-      <img src="4.gif" class="gif">
-    </div>
-
-    <script>
-      let activeGifIndex = 0;
-
-      function showNextGif() {
-        const gifs = document.querySelectorAll('.gif');
-        if (activeGifIndex < gifs.length - 1) {
-          gifs[activeGifIndex].classList.remove('active');
-          activeGifIndex++;
-          gifs[activeGifIndex].classList.add('active');
-        } else {
-          window.location.href = '#';
-        }
-      }
-
-      document.addEventListener('scroll', () => {
+      setTimeout(() => {
         showNextGif();
-      });
-    </script>
-  </body>
+      }, 1000);
+    }
+
+    showNextGif();
+
+    document.addEventListener('scroll', () => {
+      if (scrolled) {
+        return;
+      }
+
+      scrolled = true;
+
+      if (currentGifIndex < gifs.length) {
+        gifs[currentGifIndex].scrollIntoView();
+      } else {
+        redirectLink.scrollIntoView();
+      }
+    });
+  </script>
+</body>
 </html>
