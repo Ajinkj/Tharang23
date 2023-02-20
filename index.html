@@ -58,7 +58,7 @@
             currentGifIndex++;
           }
 
-          if (scrollTop + windowHeight == documentHeight) {
+          if (scrollTop + windowHeight >= documentHeight) {
             // Redirect to URL after all GIFs have been displayed
             window.location.href = "https://your-website-url.com";
           }
