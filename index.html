@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>tharang</title>
+    <title>ajin</title>
     <style>
       body {
         margin: 0;
@@ -64,7 +64,9 @@
                 currentGifIndex++;
               }
 
-              if (currentGifIndex < gifElements.length && currentScrollPosition > lastScrollPosition) {
+              if (currentGifIndex >= gifElements.length) {
+                window.location.href = "ajinkj.github.io"; // Replace with your URL
+              } else if (currentScrollPosition > lastScrollPosition) {
                 window.scrollTo(0, currentGifRect.top + windowHeight);
               }
 
