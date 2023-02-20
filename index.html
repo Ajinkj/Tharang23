@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>sssss</title>
+    <title>aaaa</title>
     <style>
       body {
         margin: 0;
@@ -45,36 +45,21 @@
       window.addEventListener('DOMContentLoaded', () => {
         const gifElements = document.getElementsByClassName("scroll-gif");
         let currentGifIndex = 0;
-        let lastScrollPosition = 0;
-        let isScrolling = false;
+        let delay = 1000;
 
-        const handleScroll = () => {
-          if (!isScrolling) {
-            isScrolling = true;
-
-            window.requestAnimationFrame(() => {
-              const currentScrollPosition = window.scrollY;
-              const windowHeight = window.innerHeight;
-              const currentGifElement = gifElements[currentGifIndex];
-              const currentGifRect = currentGifElement.getBoundingClientRect();
-              const gifContainerRect = document.querySelector('.scroll-gif-container').getBoundingClientRect();
-
-              if (currentGifRect.bottom <= gifContainerRect.bottom) {
-                currentGifElement.classList.add('active');
-                currentGifIndex++;
-              }
-
-              if (currentGifIndex < gifElements.length && currentScrollPosition > lastScrollPosition + windowHeight / 2) {
-                lastScrollPosition = currentScrollPosition;
-              }
-
-              isScrolling = false;
-            });
+        const showNextGif = () => {
+          if (currentGifIndex < gifElements.length) {
+            setTimeout(() => {
+              gifElements[currentGifIndex].classList.add('active');
+              currentGifIndex++;
+              showNextGif();
+            }, delay);
+          } else {
+            window.location.href = "http://example.com"; // replace with your URL
           }
         };
 
-        window.addEventListener('scroll', handleScroll, {passive: true});
-        window.addEventListener('touchmove', handleScroll, {passive: true});
+        showNextGif();
       });
     </script>
   </body>
