@@ -7,6 +7,7 @@
       body {
         margin: 0;
         padding: 0;
+        background-color: black;
       }
       .scroll-gif {
         opacity: 0;
@@ -31,32 +32,38 @@
     <img src="4.gif" alt="GIF 4" class="scroll-gif">
 
     <script>
-      const gifUrls = [
-        "1.gif",
-        "2.gif",
-        "3.gif",
-        "4.gif"
-      ];
-
-      window.onscroll = function() {
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
+      window.addEventListener('DOMContentLoaded', () => {
         const gifElements = document.getElementsByClassName("scroll-gif");
+        let currentGifIndex = 0;
 
         for (let i = 0; i < gifElements.length; i++) {
-          const gifElement = gifElements[i];
-          const rect = gifElement.getBoundingClientRect();
-          if (rect.top < windowHeight && rect.bottom >= 0) {
-            gifElement.classList.add("active");
-          }
+          gifElements[i].addEventListener('load', () => {
+            gifElements[i].classList.add("active");
+          });
         }
 
-        if (scrollTop + windowHeight == documentHeight) {
-          // Redirect to URL after all GIFs have been displayed
-          window.location.href = "https://your-website-url.com";
-        }
-      };
+        window.addEventListener('scroll', () => {
+          const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+          const windowHeight = window.innerHeight;
+          const documentHeight = document.documentElement.scrollHeight;
+          const currentGifElement = gifElements[currentGifIndex];
+          const rect = currentGifElement.getBoundingClientRect();
+
+          if (rect.top < windowHeight && rect.bottom >= 0) {
+            currentGifElement.classList.add("active");
+          }
+
+          if (currentGifIndex < gifElements.length - 1 && rect.bottom <= 0) {
+            currentGifElement.classList.remove("active");
+            currentGifIndex++;
+          }
+
+          if (scrollTop + windowHeight == documentHeight) {
+            // Redirect to URL after all GIFs have been displayed
+            window.location.href = "https://your-website-url.com";
+          }
+        });
+      });
     </script>
   </body>
 </html>
