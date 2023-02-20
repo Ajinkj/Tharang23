@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>ajin</title>
+    <title>sssss</title>
     <style>
       body {
         margin: 0;
@@ -64,13 +64,10 @@
                 currentGifIndex++;
               }
 
-              if (currentGifIndex >= gifElements.length) {
-                window.location.href = "#"; // Replace with your URL
-              } else if (currentScrollPosition > lastScrollPosition) {
-                window.scrollTo(0, currentGifRect.top + windowHeight);
+              if (currentGifIndex < gifElements.length && currentScrollPosition > lastScrollPosition + windowHeight / 2) {
+                lastScrollPosition = currentScrollPosition;
               }
 
-              lastScrollPosition = currentScrollPosition;
               isScrolling = false;
             });
           }
