@@ -2,23 +2,31 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Scrolling GIFs Example</title>
+    <title>tharang</title>
     <style>
       body {
         margin: 0;
         padding: 0;
         background-color: black;
       }
-      .scroll-gif {
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+      .scroll-gif-container {
         position: fixed;
         top: 0;
         left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      .scroll-gif {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
         z-index: -1;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
       }
       .scroll-gif.active {
         opacity: 1;
@@ -26,37 +34,48 @@
     </style>
   </head>
   <body>
-    <img src="1.gif" alt="GIF 1" class="scroll-gif active">
-    <img src="2.gif" alt="GIF 2" class="scroll-gif">
-    <img src="3.gif" alt="GIF 3" class="scroll-gif">
-    <img src="4.gif" alt="GIF 4" class="scroll-gif">
+    <div class="scroll-gif-container">
+      <img src="1.gif" alt="GIF 1" class="scroll-gif active">
+      <img src="2.gif" alt="GIF 2" class="scroll-gif">
+      <img src="3.gif" alt="GIF 3" class="scroll-gif">
+      <img src="4.gif" alt="GIF 4" class="scroll-gif">
+    </div>
 
     <script>
       window.addEventListener('DOMContentLoaded', () => {
         const gifElements = document.getElementsByClassName("scroll-gif");
         let currentGifIndex = 0;
+        let lastScrollPosition = 0;
+        let isScrolling = false;
 
-        window.addEventListener('scroll', () => {
-          const scrollTop = window.scrollY;
-          const windowHeight = window.innerHeight;
-          const documentHeight = document.documentElement.scrollHeight;
-          const currentGifElement = gifElements[currentGifIndex];
-          const rect = currentGifElement.getBoundingClientRect();
+        const handleScroll = () => {
+          if (!isScrolling) {
+            isScrolling = true;
 
-          if (rect.top < windowHeight && rect.bottom >= 0) {
-            currentGifElement.classList.add("active");
+            window.requestAnimationFrame(() => {
+              const currentScrollPosition = window.scrollY;
+              const windowHeight = window.innerHeight;
+              const currentGifElement = gifElements[currentGifIndex];
+              const currentGifRect = currentGifElement.getBoundingClientRect();
+              const gifContainerRect = document.querySelector('.scroll-gif-container').getBoundingClientRect();
+
+              if (currentGifRect.bottom <= gifContainerRect.bottom) {
+                currentGifElement.classList.add('active');
+                currentGifIndex++;
+              }
+
+              if (currentGifIndex < gifElements.length && currentScrollPosition > lastScrollPosition) {
+                window.scrollTo(0, currentGifRect.top + windowHeight);
+              }
+
+              lastScrollPosition = currentScrollPosition;
+              isScrolling = false;
+            });
           }
+        };
 
-          if (currentGifIndex < gifElements.length - 1 && rect.bottom <= windowHeight) {
-            currentGifElement.classList.remove("active");
-            currentGifIndex++;
-          }
-
-          if (scrollTop + windowHeight >= documentHeight) {
-            // Redirect to URL after all GIFs have been displayed
-            window.location.href = "https://your-website-url.com";
-          }
-        });
+        window.addEventListener('scroll', handleScroll, {passive: true});
+        window.addEventListener('touchmove', handleScroll, {passive: true});
       });
     </script>
   </body>
