@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>aaaa</title>
+    <title>tttt</title>
     <style>
       body {
         margin: 0;
@@ -46,20 +46,29 @@
         const gifElements = document.getElementsByClassName("scroll-gif");
         let currentGifIndex = 0;
         let delay = 1000;
+        let showingGif = false;
 
         const showNextGif = () => {
           if (currentGifIndex < gifElements.length) {
             setTimeout(() => {
               gifElements[currentGifIndex].classList.add('active');
               currentGifIndex++;
-              showNextGif();
+              showingGif = false;
             }, delay);
-          } else {
-            window.location.href = "http://example.com"; // replace with your URL
           }
         };
 
-        showNextGif();
+        window.addEventListener('scroll', () => {
+          if (showingGif) {
+            return;
+          }
+          showingGif = true;
+          showNextGif();
+        });
+
+        window.addEventListener('beforeunload', () => {
+          window.scrollTo(0, 0);
+        });
       });
     </script>
   </body>
